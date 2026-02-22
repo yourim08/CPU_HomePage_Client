@@ -35,6 +35,7 @@ const awardsData = [
   { id: 13, image: award13, date: "2025.12.22", title: "미소챌 개발부문 3위", person: "신채은", appName: "온말" },
 ];
 
+
 const spin = keyframes`
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
@@ -48,8 +49,8 @@ const Container = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
 
-  -ms-overflow-style: none; //Edge
-  &::-webkit-scrollbar { //Chrome
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
     display: none;
   }
 `;
@@ -71,7 +72,7 @@ const Carousel = styled.div`
   margin: 80px auto;
   width: 100%;
   overflow: hidden;
-  padding: 80px;
+  padding-top: 80px;
 `;
 
 const Slide = styled.div`
@@ -81,7 +82,7 @@ const Slide = styled.div`
   width: max-content;
   padding-left: 5.5em;
 
-  animation: ${spin} 50s linear infinite;
+  animation: ${spin} 40s linear infinite;
   animation-play-state: ${({ $paused }) => ($paused ? "paused" : "running")};
 `;
 
@@ -147,8 +148,7 @@ const OverlayText = styled.div`
   color: #fff;
   text-align: center;
 
-  h3,
-  p {
+  h3,p {
     margin: 0;
   }
 
