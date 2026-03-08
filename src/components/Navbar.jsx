@@ -2,13 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom'; // 페이지 이동을 위한 hook
 import logoImg from '../assets/nav_logo.svg';
+import Instagram from '../assets/instagram.svg';
 
 const NavContainer = styled.nav`
+  background-color: #04001B;
   position: fixed;
-  top: ${props => props.theme.vh(50)};
   left: 0;
   width: 100%;
-  height: ${props => props.theme.vh(100)};
+  height: ${props => props.theme.vh(120)};
   display: flex;
   align-items: center;
   z-index: 1000;
@@ -60,8 +61,8 @@ const MenuItem = styled.li`
 
 const ApplyButton = styled.button`
   width: ${props => props.theme.vw(133)};
-  height: ${props => props.theme.vh(64)};
-  padding: ${props => props.theme.vh(19)} ${props => props.theme.vw(28)};
+  height: ${props => props.theme.vh(60)};
+  padding: ${props => props.theme.vh(17)} ${props => props.theme.vw(27)};
   
   background-color: #6BFBE6;
   color: #04001B;
@@ -69,7 +70,7 @@ const ApplyButton = styled.button`
   border-radius: ${props => props.theme.vw(19)};
   
   font-family: 'Pretendard', sans-serif;
-  font-weight: 500;
+  font-weight: 600;
   font-size: ${props => props.theme.vw(20)};
   cursor: pointer;
   flex-shrink: 0;
@@ -77,6 +78,16 @@ const ApplyButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  
+  // 텍스트 왼쪽에 로고를 넣기 위해 flex gap 설정
+  gap: ${props => props.theme.vw(5)}; 
+`;
+
+// 인스타그램 로고 스타일 정의
+const InstagramLogo = styled.img`
+  padding-left: ${props => props.theme.vw(2)}; 
+  width: ${props => props.theme.vw(24)}; // 원하는 크기로 조정
+  height: ${props => props.theme.vw(24)}; 
 `;
 
 const Navbar = ({ $isVisible }) => {
@@ -109,7 +120,9 @@ const Navbar = ({ $isVisible }) => {
         </MenuWrapper>
 
         <ApplyButton onClick={() => handleExternalClick('https://www.instagram.com/cpu_mirim/')}>
-          @cpu_mirm
+          {/* Instagram 로고 이미지 추가 */}
+          <InstagramLogo src={Instagram} alt="Instagram" />
+          cpu_mirm
         </ApplyButton>      
         </NavInner>
     </NavContainer>

@@ -1,71 +1,15 @@
 import { useState, useEffect } from 'react';
+import { fetchQuestions, fetchQuestionDetail } from '../lib/api';
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components';
 import Navbar from "../components/Navbar.jsx";
 import Vector from '../assets/Vector.svg';
 import Vector1 from '../assets/Vector1.svg';
 
-const faqs = [
-  {
-    id: 1,
-    question: '질문',
-    answer: '어쩌고 저쩌고\n어쩌고 저쩌고',
-  },
-  {
-    id: 2,
-    question: '질문',
-    answer: '어쩌고 저쩌고\n어쩌고 저쩌고',
-  },
-  {
-    id: 3,
-    question: '질문',
-    answer: '어쩌고 저쩌고\n어쩌고 저쩌고',
-  },
-  {
-    id: 4,
-    question: '질문',
-    answer: '어쩌고 저쩌고\n어쩌고 저쩌고',
-  },
-  {
-    id: 5,
-    question: '질문',
-    answer: '어쩌고 저쩌고\n어쩌고 저쩌고',
-  },
-  {
-    id: 6,
-    question: '질문',
-    answer: '어쩌고 저쩌고\n어쩌고 저쩌고',
-  },
-  {
-    id: 7,
-    question: '질문',
-    answer: '어쩌고 저쩌고\n어쩌고 저쩌고',
-  },
-  {
-    id: 8,
-    question: '질문',
-    answer: '어쩌고 저쩌고\n어쩌고 저쩌고',
-  },
-  {
-    id: 9,
-    question: '질문',
-    answer: '어쩌고 저쩌고\n어쩌고 저쩌고',
-  },
-  {
-    id: 10,
-    question: '질문',
-    answer: '어쩌고 저쩌고\n어쩌고 저쩌고',
-  },
-  {
-    id: 11,
-    question: '질문',
-    answer: '어쩌고 저쩌고\n어쩌고 저쩌고',
-  },
-];
+// 질문 목록은 API에서 받아옴
 
 // ── Layout ────────────────────────────────────────────────
 const Page = styled.div`
-  margin-top: ${props => props.theme.vh(150)};
   background-color: #04001B;
   width: 100%;
 `;
@@ -75,7 +19,7 @@ const Hero = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: ${props => props.theme.vh(100)};
+  padding-top: ${props => props.theme.vh(200)};
   gap: ${props => props.theme.vh(20)};
 `;
 
@@ -192,14 +136,31 @@ const AnswerText = styled.div`
 
 // ── Component ─────────────────────────────────────────────
 export default function QuestionHome() {
+  const [questions, setQuestions] = useState([]);
   const [openId, setOpenId] = useState(null);
-  const navigate = useNavigate()
-
-  const toggle = (id) => {
-    setOpenId((prev) => (prev === id ? null : id));
-  };
-
+  const [answers, setAnswers] = useState({});
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    fetchQuestions().then(setQuestions).catch(() => setQuestions([]));
+  }, []);
+
+  const toggle = async (id) => {
+    setOpenId((prev) => (prev === id ? null : id));
+    if (!answers[id]) {
+      setLoading(true);
+      try {
+        const detail = await fetchQuestionDetail(id);
+        setAnswers((prev) => ({ ...prev, [id]: detail }));
+      } catch {
+        setAnswers((prev) => ({ ...prev, [id]: null }));
+      } finally {
+        setLoading(false);
+      }
+    }
+  };
 
   const onScroll = (id) => {
     const element = document.getElementById(id);
@@ -208,34 +169,29 @@ export default function QuestionHome() {
     }
   };
 
-
   return (
     <Page>
       <Navbar $isVisible={isVisible} onScroll={onScroll} />
-
       <Hero>
         <Title>Q&A</Title>
         <Subtitle>CPU에 대해 궁금한 것을 질문하세요</Subtitle>
         <AskButton type="button" onClick={() => navigate('/question2')}>질문하기</AskButton>
       </Hero>
-
       <FaqList>
-        {faqs.map((faq) => {
-          const isOpen = openId === faq.id;
+        {questions.map((q) => {
+          const isOpen = openId === q.id;
+          const answer = answers[q.id]?.answer;
           return (
-            <Card key={faq.id} $isOpen={isOpen}>
-              <Trigger onClick={() => toggle(faq.id)}>
-                <span>{faq.question}</span>
+            <Card key={q.id} $isOpen={isOpen}>
+              <Trigger onClick={() => toggle(q.id)}>
+                <span>{q.question}</span>
                 <IconBox>
-                  <Arrow 
-                    src={isOpen ? Vector : Vector1} 
-                    alt="toggle arrow"
-                  />
+                  <Arrow src={isOpen ? Vector : Vector1} alt="toggle arrow" />
                 </IconBox>
               </Trigger>
               <ContentArea $isOpen={isOpen}>
                 <AnswerText>
-                  {faq.answer}
+                  {loading && isOpen ? '불러오는 중...' : (answer ? answer : '답변 대기중입니다!')}
                 </AnswerText>
               </ContentArea>
             </Card>

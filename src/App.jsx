@@ -24,8 +24,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/project" element={<Project />} />
-        <Route path="/member" element={<Member />} />
-        {/* 아래에 /project가 중복되어 있어 하나는 유지하셔도 됩니다. */}
+        <Route path="/members" element={<Member />} />
         <Route path="/question" element={<QuestionHome />} />
         <Route path="/question2" element={<Question2 />} />
         <Route path="/apply" element={<ApplyForm />} />

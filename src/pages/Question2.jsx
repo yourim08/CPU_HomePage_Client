@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
+import { postQuestion } from '../lib/api';
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components';
 import Navbar from "../components/Navbar.jsx";
 
 // ── Layout ────────────────────────────────────────────────
 const Page = styled.div`
-  margin-top: ${props => props.theme.vh(150)};
   background-color: #04001B;
   width: 100%;
 `;
@@ -15,7 +15,7 @@ const Hero = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: ${props => props.theme.vh(100)};
+  padding-top: ${props => props.theme.vh(200)};
   gap: ${props => props.theme.vh(20)};
 `;
 
@@ -122,21 +122,46 @@ export default function Question2() {
     }
   };
 
+  const [question, setQuestion] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async () => {
+    if (!question.trim()) {
+      setError("질문을 입력해 주세요.");
+      return;
+    }
+    setLoading(true);
+    setError("");
+    try {
+      await postQuestion(question);
+      navigate('/question');
+    } catch (e) {
+      setError(e.message || "질문 등록 실패");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Page>
       <Navbar $isVisible={isVisible} onScroll={onScroll} />
-
       <Hero>
         <Title>Q&A</Title>
         <Subtitle>CPU에 대해 궁금한 것을 질문하세요</Subtitle>
-        
         <QuestionLabel>
           질문 <Required>*</Required>
         </QuestionLabel>
-
-        <QuestionInput placeholder="질문 내용을 입력해 주세요." />
-
-        <AskButton type="button" onClick={() => navigate('/question2')}>질문하기</AskButton>
+        <QuestionInput
+          placeholder="질문 내용을 입력해 주세요."
+          value={question}
+          onChange={e => setQuestion(e.target.value)}
+          disabled={loading}
+        />
+        {error && <div style={{ color: '#FC6340', marginTop: 10 }}>{error}</div>}
+        <AskButton type="button" onClick={handleSubmit} disabled={loading}>
+          {loading ? '질문 등록 중...' : '질문하기'}
+        </AskButton>
       </Hero>
     </Page>
   );

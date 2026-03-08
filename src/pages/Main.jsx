@@ -7,6 +7,7 @@ import Gallery from './Gallery.jsx';
 import Project from './Project.jsx';
 import MainEnd from './MainEnd.jsx';
 import Awards from './Awards.jsx';
+import { AnimatedBg } from '../components/AnimatedBg.jsx';
 import Faq from './Faq.jsx';
 
 const PageWrapper = styled.div`
@@ -65,12 +66,29 @@ const Main = () => {
 
   return (
     <PageWrapper>
+
       <MainHeroSection id="home">
+        <AnimatedBg $bg={bg} />   
         <Navbar $isVisible={isVisible} onScroll={onScroll} />
         <div className="heroWrapper">
           <HeroContent />
         </div>
       </MainHeroSection>
+      
+      {/* <MainHeroSection id="home">
+        <Navbar $isVisible={isVisible} onScroll={onScroll} />
+        <div className="heroWrapper">
+          <HeroContent />
+        </div>
+      </MainHeroSection> */}
+
+      {/* <MainHeroSection id="home">
+        <PlasmaOverlay />   
+        <Navbar $isVisible={isVisible} onScroll={onScroll} />
+        <div className="heroWrapper">
+          <HeroContent />
+        </div>
+      </MainHeroSection> */}
 
       <section id="about"></section>
       <section id="gallery">
