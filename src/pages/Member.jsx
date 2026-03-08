@@ -130,10 +130,10 @@ const Overlay = styled.div`
 const MemberCard = styled.div`
   position: relative;
   width: ${props => props.theme.vw(218)};
+  border-radius: 8px;
   height: ${props => props.theme.vh(445)};
   margin-bottom: ${props => props.theme.vh(parseInt(marginList[props.$index]))};
   overflow: hidden;
-  border-radius: 8px;
   img {
     width: 100%;
     height: 100%;

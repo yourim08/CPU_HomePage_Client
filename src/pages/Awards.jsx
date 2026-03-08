@@ -41,7 +41,7 @@ const awardsData = [
 
   { id: 5, image: award3, date: "2024.05.31", title: "관악구 표창장", person: "이소리" },
   { id: 6, image: award10, date: "2024.12.07", title: "2024 태국 글로벌 인턴십 수료증", person: "전유림" },
-  { id: 7, image: award14, date: "2025.07.22", title: "2025 호주 글로벌 인턴십 수료증", person: "전유림" },
+  { id: 7, image: award14, date: "2026.02.06", title: "2025 호주 글로벌 인턴십 수료증", person: "전유림" },
   { id: 8, image: award1, date: "2024.08.08", title: "제 14회 e-ICON 3위", person: "이소리", appName: "SkillSprint" },
   { id: 9, image: award11, date: "2024.12.22", title: "제 28회 앱잼 최우수상", person: "전유림", appName: "HousePick" },
   { id: 10, image: award2, date: "2024.08.06", title: "K-디지털 플랫폼 앱잼 장려상", person: "이소리", appName: "워커쉴드" },

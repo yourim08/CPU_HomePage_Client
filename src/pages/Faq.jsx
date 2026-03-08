@@ -69,7 +69,7 @@ const Trigger = styled.button`
   cursor: pointer;
   color: #fff;
   font-size: ${props => props.theme.vw(20)};
-  font-weight: 600;
+  font-weight: 500;
   text-align: left;
   transition: background-color 0.4s ease;
 
@@ -103,7 +103,7 @@ const ContentArea = styled.div`
 
 const Answer = styled.div`
   color: #fff;
-  font-weight: 500;
+  font-weight: 300;
   font-size: ${props => props.theme.vw(18)};
   line-height: 1.6;
   border-top: 1.5px solid rgba(255, 255, 255, 0.6);
@@ -117,7 +117,7 @@ const FaqItem = ({ question, answer, isOpen, onClick }) => {
         <span>{question}</span>
         <IconBox>
           <Arrow 
-            src={isOpen ? Vector : Vector1} 
+            src={isOpen ? Vector1 : Vector} 
             alt="toggle arrow"
           />
         </IconBox>

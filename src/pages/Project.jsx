@@ -40,7 +40,6 @@ const ProjectContainer = styled.div`
 const TitleArea = styled.div`
     text-align: center;
     margin-top: ${p => p.theme.vh(148)};
-    z-index: 20;
 `;
 
 const MainTitle = styled.h2`
