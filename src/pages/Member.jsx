@@ -76,7 +76,7 @@ const Title = styled.h1`
 `;
 
 const ToggleContainer = styled.div`
-  display: flex;~
+  display: flex;
   position: relative;
   width: ${props => props.theme.vw(326)};
   height: ${props => props.theme.vh(56)};
